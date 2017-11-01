@@ -74,7 +74,12 @@ class DbOperation {
 
     function get_exercise_order($workout_description_id, $account_id) {
         $rows = array();
-        $stmt = $this->conn->prepare('SELECT * FROM workout_order WHERE workout_description_id = ? AND account_id = ?');
+        $stmt = $this->conn->prepare('SELECT wo.id, wo.position, wo.amount, wo.weight, wo.sets, l.name as label, 
+                                             e.name as name, e.description as description, e.id as exercise_id 
+                                        FROM workout_order as wo
+                                        inner join label as l on wo.label_id=l.id
+                                        inner join exercise as e on wo.exercise_id=e.id
+                                        WHERE wo.workout_description_id = 2 AND wo.account_id = 1');
         $stmt->bind_param('ii', $workout_description_id, $account_id);
         $stmt->execute();
 
