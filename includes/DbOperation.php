@@ -54,7 +54,7 @@ class DbOperation {
 
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
-            echo $row;
+            echo "HERE";
 //            $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
 //            $stmt->bind_param('i', row['id']);
 //            $stmt->execute();
