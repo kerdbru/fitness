@@ -44,8 +44,7 @@ class DbOperation {
 
     function get_workout_descriptions() {
         $rows = array();
-        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wd.rating_sum, wd.rating_count, 
-                                             wt.name AS type, a.first_name, a.id AS account_id 
+        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wt.name AS type, a.first_name, a.id AS account_id 
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
                                       INNER JOIN account AS a ON wd.account_id=a.id
@@ -55,6 +54,18 @@ class DbOperation {
 
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
+
+            $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
+            $stmt->bind_param('i', row['id']);
+            $stmt->execute();
+            $row['rating_count'] = $stmt->get_result();
+
+
+            $stmt = $this->conn->prepare('SELECT sum(score) as number from ratings where workout_description_id = ?');
+            $stmt->bind_param('i', row['id']);
+            $stmt->execute();
+            $row['rating_sum'] = $stmt->get_result();
+
             $rows[] = $row;
         }
 
