@@ -71,6 +71,20 @@ class DbOperation {
 
         return json_encode($rows);
     }
+
+    function get_exercise_order($workout_description_id, $account_id) {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT * FROM workout_order WHERE workout_description_id = ? AND account_id = ?');
+        $stmt->bind_param('ii', $workout_description_id, $account_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+
+        return json_encode($rows);
+    }
 }
 
 ?>
