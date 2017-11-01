@@ -52,9 +52,10 @@ class DbOperation {
 
         $stmt->execute();
 
+        echo "HERE";
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
-            echo "HERE";
+
 //            $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
 //            $stmt->bind_param('i', row['id']);
 //            $stmt->execute();
