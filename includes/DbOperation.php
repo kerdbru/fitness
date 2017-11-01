@@ -55,10 +55,10 @@ class DbOperation {
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
 
-//            $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
-//            $stmt->bind_param('i', row['id']);
-//            $stmt->execute();
-//            $row['rating_count'] = $stmt->get_result()['number'];
+            $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
+            $stmt->bind_param('i', row['id']);
+            $stmt->execute();
+            $row['rating_count'] = mysqli_fetch_assoc($stmt->get_result())['number'];
 //
 //
 //            $stmt = $this->conn->prepare('SELECT sum(score) as number from ratings where workout_description_id = ?');
