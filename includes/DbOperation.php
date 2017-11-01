@@ -58,13 +58,13 @@ class DbOperation {
             $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
             $stmt->bind_param('i', $row['id']);
             $stmt->execute();
-            $row['rating_count'] = mysqli_fetch_assoc($stmt->get_result())['number'];
+            $row['rating_count'] = (int)mysqli_fetch_assoc($stmt->get_result())['number'];
 
 
             $stmt = $this->conn->prepare('SELECT sum(score) as number from ratings where workout_description_id = ?');
             $stmt->bind_param('i', $row['id']);
             $stmt->execute();
-            $row['rating_sum'] = mysqli_fetch_assoc($stmt->get_result())['number'];
+            $row['rating_sum'] = (int)mysqli_fetch_assoc($stmt->get_result())['number'];
 
             $rows[] = $row;
         }
