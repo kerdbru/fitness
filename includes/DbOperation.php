@@ -41,6 +41,24 @@ class DbOperation {
 
         return $stmt->execute();
     }
+
+    function get_workout_descriptions() {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wd.rating_sum, wd.rating_count, wd.visible, 
+                                             wt.name AS type, a.first_name, a.id AS account_id 
+                                      FROM workout_description AS wd 
+                                      INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
+                                      INNER JOIN account AS a ON wd.account_id=a.id');
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+
+        return json_encode($rows);
+    }
 }
 
 ?>
