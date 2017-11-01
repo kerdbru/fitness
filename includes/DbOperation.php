@@ -44,11 +44,12 @@ class DbOperation {
 
     function get_workout_descriptions() {
         $rows = array();
-        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wd.rating_sum, wd.rating_count, wd.visible, 
+        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wd.rating_sum, wd.rating_count, 
                                              wt.name AS type, a.first_name, a.id AS account_id 
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
-                                      INNER JOIN account AS a ON wd.account_id=a.id');
+                                      INNER JOIN account AS a ON wd.account_id=a.id
+                                      WHERE wd.visible=1');
 
         $stmt->execute();
 
