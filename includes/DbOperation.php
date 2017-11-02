@@ -79,7 +79,7 @@ class DbOperation {
                                         FROM workout_order as wo
                                         inner join label as l on wo.label_id=l.id
                                         inner join exercise as e on wo.exercise_id=e.id
-                                        WHERE wo.workout_description_id = 2 AND wo.account_id = 1');
+                                        WHERE wo.workout_description_id = ? AND wo.account_id = ?');
         $stmt->bind_param('ii', $workout_description_id, $account_id);
         $stmt->execute();
 
