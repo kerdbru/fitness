@@ -104,7 +104,12 @@ class DbOperation {
         $stmt = $this->conn->prepare('SELECT score from ratings where account_id = ? and workout_description_id = ?');
         $stmt->bind_param('ii', $account_id, $workout_id);
         $stmt->execute();
-        return (int)mysqli_fetch_assoc($stmt->get_result())['score'];
+
+        $result = $stmt->get_result();
+        if($row = mysqli_fetch_assoc($result)) {
+            return (int)$row['score'];
+        }
+        return 0;
     }
 }
 
