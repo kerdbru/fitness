@@ -91,6 +91,14 @@ class DbOperation {
 
         return json_encode($rows);
     }
+
+    function rate_workout($id, $workout_id, $rating) {
+        $stmt = $this->conn->prepare('INSERT INTO ratings (account_id, workout_description_id, score) 
+                                      VALUES(?,?,?) ON DUPLICATE KEY UPDATE score = ?');
+        $stmt->bind_param('iiii', $id, $workout_id, $rating, $rating);
+
+        return $stmt->execute();
+    }
 }
 
 ?>
