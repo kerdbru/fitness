@@ -119,6 +119,32 @@ class DbOperation {
 
         return $stmt->execute();
     }
+
+    function delete_favorite($account_id, $workout_id) {
+        $stmt = $this->conn->prepare('DELETE FROM favorites where 
+                                      account_id = ? AND workout_description_id = ?');
+        $stmt->bind_param('ii', $account_id, $workout_id);
+
+        return $stmt->execute();
+    }
+
+    function get_favorites($account_id) {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT wdwt.name, wdwt.type, wdwt.id from favorites as f 
+                                     inner join (SELECT wd.id, wd.account_id, wd.name, wt.name as type from workout_description as wd INNER JOIN workout_type as wt on wd.workout_type_id=wt.id) as wdwt on
+                                     f.workout_description_id=wdwt.id and f.account_id=wdwt.account_id 
+                                     where wdwt.account_id = ?');
+        $stmt->bind_param('i', $account_id);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+
+        return json_encode($rows);
+    }
 }
 
 ?>
