@@ -111,6 +111,14 @@ class DbOperation {
         }
         return 0;
     }
+
+    function add_favorite($account_id, $workout_id) {
+        $stmt = $this->conn->prepare('INSERT INTO favorites (account_id, workout_id) 
+                                      VALUES(?,?)');
+        $stmt->bind_param('ii', $account_id, $workout_id);
+
+        return $stmt->execute();
+    }
 }
 
 ?>
