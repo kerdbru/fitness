@@ -1,10 +1,8 @@
 <?php
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $account_id = (int)$_POST['accountId'];
-    $workout_id = (int)$_POST['workoutId'];
-
-    echo gettype($account_id);
+    $account_id = $_POST['accountId'];
+    $workout_id = $_POST['workoutId'];
 
     require_once '../includes/DbOperation.php';
     $db = new DbOperation();

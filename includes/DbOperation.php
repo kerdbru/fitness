@@ -113,11 +113,9 @@ class DbOperation {
     }
 
     function add_favorite($account_id, $workout_id) {
-        echo "HERE";
         $stmt = $this->conn->prepare('INSERT INTO favorites (account_id, workout_id) 
                                       VALUES(?,?)');
         $stmt->bind_param('ii', $account_id, $workout_id);
-        echo "HERE";
         return $stmt->execute();
     }
 
