@@ -112,11 +112,27 @@ class DbOperation {
         return 0;
     }
 
-    function add_favorite($account_id, $workout_id) {
+    function add_favorite($account_id, $workout_id, $original_account_id) {
+        $stmt = $this->conn->prepare('SELECT * from workout_order WHERE account_id = ? AND workout_description_id = ?');
+        $stmt->bind_param('ii', $original_account_id, $workout_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        while($row = mysqli_fetch_assoc($result)) {
+            $stmt = $this->conn->prepare('INSERT INTO workout_order (workout_description_id, account_id, position, 
+                                          excercise_id, label_id, amount, weight, sets) 
+                                      VALUES(?,?,?,?,?,?,?,?)');
+            $stmt->bind_param('iiiiiiii', $row['workout_description_id'], $account_id, $row['position'], $row['excercise_id'],
+                                $row['label_id'], $row['amount'], $row['weight'], $row['sets']);
+            $stmt->execute();
+        }
         $stmt = $this->conn->prepare('INSERT INTO favorites (account_id, workout_description_id) 
                                       VALUES(?,?)');
+
         $stmt->bind_param('ii', $account_id, $workout_id);
         return $stmt->execute();
+
     }
 
     function delete_favorite($account_id, $workout_id) {
