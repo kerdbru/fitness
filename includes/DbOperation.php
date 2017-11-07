@@ -126,7 +126,7 @@ class DbOperation {
             $stmt = $this->conn->prepare('INSERT INTO workout_order (workout_description_id, account_id, position, 
                                           excercise_id, label_id, amount, weight, sets) 
                                       VALUES(?,?,?,?,?,?,?,?)');
-            $stmt->bind_param('iiiiiiii', $row['workout_description_id'], $account_id, $row['position'], $row['excercise_id'],
+            $stmt->bind_param('iiiiiiii', $row['workout_description_id'], $account_id, $row['position'], $row['exercise_id'],
                                 $row['label_id'], $row['amount'], $row['weight'], $row['sets']);
             $stmt->execute();
         }
