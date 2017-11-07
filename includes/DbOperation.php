@@ -144,6 +144,18 @@ class DbOperation {
 
         return json_encode($rows);
     }
-}
 
+    function check_favorite($account_id, $workout_id) {
+        $stmt = $this->conn->prepare('SELECT COUNT(*) AS number FROM favorites WHERE
+                                      account_id = ? AND workout_description_id = ?');
+        $stmt->bind_param('ii', $account_id, $workout_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($row = mysqli_fetch_assoc($result)) {
+            return (int)$row['number'];
+        }
+        return 0;
+    }
+}
 ?>
