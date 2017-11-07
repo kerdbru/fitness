@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     require_once '../includes/DbOperation.php';
     $db = new DbOperation();
-    $response = $db->check_favorite($account_id);
+    $response = $db->check_favorite($account_id, $workout_id);
 }
 
 echo $response;
