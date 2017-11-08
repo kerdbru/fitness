@@ -133,10 +133,20 @@ class DbOperation {
     }
 
     function delete_favorite($account_id, $workout_id) {
+        $stmt = $this->conn->prepare('SELECT COUNT(*) AS number FROM workout_description
+                                      WHERE account_id=? AND id=?');
+        $stmt->bind_param('ii', $account_id, $workout_id);
+        $stmt->execute();
+
+        if(mysqli_fetch_assoc($stmt->get_result())['number'] == 0) {
+            $stmt = $this->conn->prepare('DELETE FROM workout_order WHERE workout_description_id=? AND account_id=?');
+            $stmt->bind_param('ii', $workout_id, $account_id);
+            $stmt->execute();
+        }
+
         $stmt = $this->conn->prepare('DELETE FROM favorites where 
                                       account_id = ? AND workout_description_id = ?');
         $stmt->bind_param('ii', $account_id, $workout_id);
-
         return $stmt->execute();
     }
 
