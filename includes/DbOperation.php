@@ -118,11 +118,7 @@ class DbOperation {
         $stmt->execute();
 
         $result = $stmt->get_result();
-
-        echo "HERE";
-
         while($row = mysqli_fetch_assoc($result)) {
-            echo "HERE";
             $stmt = $this->conn->prepare('INSERT INTO workout_order (workout_description_id, account_id, position, 
                                           exercise_id, label_id, amount, weight, sets) 
                                       VALUES(?,?,?,?,?,?,?,?)');
@@ -132,7 +128,6 @@ class DbOperation {
         }
         $stmt = $this->conn->prepare('INSERT INTO favorites (account_id, workout_description_id) 
                                       VALUES(?,?)');
-        echo "HERE";
         $stmt->bind_param('ii', $account_id, $workout_id);
         return $stmt->execute();
     }
