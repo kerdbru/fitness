@@ -42,13 +42,16 @@ class DbOperation {
         return $stmt->execute();
     }
 
-    function get_workout_descriptions() {
+    function get_workout_descriptions($search) {
         $rows = array();
         $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wt.name AS type, a.first_name, a.id AS account_id 
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
                                       INNER JOIN account AS a ON wd.account_id=a.id
-                                      WHERE wd.visible=1');
+                                      WHERE wd.visible=1 and wd.name LIKE ?');
+
+        $query = "%".$search."%";
+        $stmt->bind_param("s", $query);
 
         $stmt->execute();
 
