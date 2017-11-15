@@ -206,11 +206,7 @@ class DbOperation {
             $rows[] = $row;
         }
 
-        print_r($rows);
-
-        $me = json_encode($rows);
-        echo json_last_error();
-        return $me;
+        return json_encode($rows);
     }
 }
 ?>
