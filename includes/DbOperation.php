@@ -197,6 +197,7 @@ class DbOperation {
         $stmt = $this->conn->prepare('SELECT * FROM exercise where name LIKE ?');
 
         $query = "%".$search."%";
+        echo $query;
         $stmt->bind_param("s", $query);
 
         $stmt->execute();
