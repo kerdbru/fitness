@@ -206,7 +206,9 @@ class DbOperation {
             $rows[] = $row;
         }
 
-        return json_encode($rows, JSON_FORCE_OBJECT);
+        print_r($rows);
+
+        return json_encode($rows);
     }
 }
 ?>
