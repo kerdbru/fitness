@@ -206,7 +206,7 @@ class DbOperation {
             $rows[] = $row;
         }
 
-        echo 'here';
+        echo sizeof($rows);
 
         return json_encode($rows);
     }
