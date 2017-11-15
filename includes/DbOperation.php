@@ -203,9 +203,10 @@ class DbOperation {
 
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
-            echo json_encode($row);
             $rows[] = $row;
         }
+
+        echo json_encode($rows);
 
         return json_encode($rows);
     }
