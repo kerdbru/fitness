@@ -191,5 +191,22 @@ class DbOperation {
         }
         return 0;
     }
+
+    function get_exercises($search) {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT * FROM exercise where name LIKE ?');
+
+        $query = "%".$search."%";
+        $stmt->bind_param("s", $query);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+
+        return json_encode($rows);
+    }
 }
 ?>
