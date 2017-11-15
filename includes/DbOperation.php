@@ -197,13 +197,13 @@ class DbOperation {
         $stmt = $this->conn->prepare('SELECT * FROM exercise where name LIKE ?');
 
         $query = "%".$search."%";
-        echo $query;
         $stmt->bind_param("s", $query);
 
         $stmt->execute();
 
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
+            echo json_encode($row);
             $rows[] = $row;
         }
 
