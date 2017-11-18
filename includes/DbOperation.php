@@ -208,5 +208,20 @@ class DbOperation {
 
         return json_encode($rows);
     }
+
+    function get_creator($id) {
+        $stmt = $this->conn->prepare('SELECT first_name, last_name FROM account WHERE id = ?');
+        $stmt->bind_param('i', $id);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($row = mysqli_fetch_assoc($result)) {
+            return json_encode($row);
+        }
+
+        return "";
+    }
 }
 ?>
