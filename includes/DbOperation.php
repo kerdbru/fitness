@@ -194,7 +194,7 @@ class DbOperation {
 
     function get_exercises($search) {
         $rows = array();
-        $stmt = $this->conn->prepare('SELECT * FROM exercise where name LIKE ?');
+        $stmt = $this->conn->prepare('SELECT name, id, description FROM exercise where name LIKE ?');
 
         $query = "%".$search."%";
         $stmt->bind_param("s", $query);
