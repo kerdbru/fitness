@@ -223,5 +223,11 @@ class DbOperation {
 
         return "";
     }
+
+    function create_workout($name, $type, $account_id) {
+        $stmt = $this->conn->prepare('INSERT INTO workout_description(name, workout_type_id, account_id) VALUES(?,?,?)');
+        $stmt->bind_param('sii', $name, $type, $account_id);
+        return $stmt->insert_id;
+    }
 }
 ?>
