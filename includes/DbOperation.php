@@ -53,7 +53,6 @@ class DbOperation {
         $like = "%".$search."%";
         if($type > 0) {
             $query = $query . ' and wd.workout_type_id=?';
-            echo $query;
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("si", $like, $type);
         }
