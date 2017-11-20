@@ -42,16 +42,24 @@ class DbOperation {
         return $stmt->execute();
     }
 
-    function get_workout_descriptions($search) {
+    function get_workout_descriptions($search, $type) {
         $rows = array();
-        $stmt = $this->conn->prepare('SELECT wd.id, wd.name, wt.name AS type, a.first_name, a.id AS account_id 
+        $query = 'SELECT wd.id, wd.name, wt.name AS type, a.first_name, a.id AS account_id 
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
                                       INNER JOIN account AS a ON wd.account_id=a.id
-                                      WHERE wd.visible=1 and wd.name LIKE ?');
+                                      WHERE wd.visible=1 and wd.name LIKE ?';
 
-        $query = "%".$search."%";
-        $stmt->bind_param("s", $query);
+        $like = "%".$search."%";
+        if($type > 0) {
+            $query = $query . ' and wd.workout_type_id=?';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("si", $like, $type);
+        }
+        else {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("s", $like);
+        }
 
         $stmt->execute();
 
