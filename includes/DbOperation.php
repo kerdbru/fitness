@@ -238,5 +238,27 @@ class DbOperation {
         $stmt->execute();
         return $stmt->insert_id;
     }
+
+    function add_workout_item($workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets) {
+        if($weight == 0) {
+            $weight = null;
+        }
+        $stmt = $this->conn->prepare('INSERT INTO workout_order($workout_description_id, $account_id, $position, \
+                                      $exercise_id, $label_id, $amount, $weight, $sets) VALUES(?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('iiiiiiiii', $workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets);
+        return $stmt->execute();
+    }
+
+    function get_labels() {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT name as text, id from label');
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+        return json_encode($rows);
+    }
 }
 ?>
