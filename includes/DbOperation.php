@@ -240,9 +240,9 @@ class DbOperation {
     }
 
     function add_workout_item($workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets) {
-        if($weight == 0) {
-            $weight = null;
-        }
+//        if($weight == 0) {
+//            $weight = null;
+//        }
         $stmt = $this->conn->prepare('INSERT INTO workout_order($workout_description_id, $account_id, $position, \
                                       $exercise_id, $label_id, $amount, $weight, $sets) VALUES(?,?,?,?,?,?,?,?)');
         echo 'HERE';
