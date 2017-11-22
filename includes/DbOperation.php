@@ -244,7 +244,7 @@ class DbOperation {
             $weight = null;
         }
         $stmt = $this->conn->prepare('INSERT INTO workout_order($workout_description_id, $account_id, $position, \
-                                      $exercise_id, $label_id, $amount, $weight, $sets) VALUES(?,?,?,?,?,?,?,?,?)');
+                                      $exercise_id, $label_id, $amount, $weight, $sets) VALUES(?,?,?,?,?,?,?,?)');
         echo 'HERE';
         $stmt->bind_param('iiiiiiii', $workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets);
         echo 'HERE';
