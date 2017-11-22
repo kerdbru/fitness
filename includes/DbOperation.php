@@ -240,19 +240,11 @@ class DbOperation {
     }
 
     function add_workout_item($workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets) {
-//        if($weight == 0) {
-//            $weight = null;
-//        }
-        echo $workout_id;
-        echo $account_id;
-        echo $position;
-        echo $exercise_id;
-        echo $label_id;
-        echo $amount;
-        echo $weight;
-        echo $sets;
-        $stmt = $this->conn->prepare('INSERT INTO workout_order($workout_description_id, $account_id, $position, \
-                                      $exercise_id, $label_id, $amount, $weight, $sets) VALUES(?,?,?,?,?,?,?,?)');
+        if($weight == 0) {
+            $weight = null;
+        }
+        $stmt = $this->conn->prepare('INSERT INTO workout_order(workout_description_id, account_id, position, \
+                                      exercise_id, label_id, amount, weight, sets) VALUES(?,?,?,?,?,?,?,?)');
         echo 'HERE';
         $stmt->bind_param('iiiiiiii', $workout_id, $account_id, $position, $exercise_id, $label_id, $amount, $weight, $sets);
         echo 'HERE';
