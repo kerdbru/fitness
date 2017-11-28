@@ -57,7 +57,7 @@ class DbOperation {
             $stmt->bind_param("si", $like, $type);
         }
         else {
-            $query = $query . 'ORDER BY wd.name';
+            $query = $query . ' ORDER BY wd.name';
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("s", $like);
         }
