@@ -175,7 +175,7 @@ class DbOperation {
         $stmt = $this->conn->prepare('SELECT wdwt.name, wdwt.type, wdwt.id, wdwt.account_id from favorites as f 
                                       inner join (SELECT wd.id, wd.name, wt.name  as type, wd.account_id from workout_description as wd 
                                       INNER JOIN workout_type as wt on wd.workout_type_id=wt.id) as wdwt on f.workout_description_id=wdwt.id 
-                                      where f.account_id = ?');
+                                      where f.account_id = ? ORDER BY wdwt.name');
         $stmt->bind_param('i', $account_id);
 
         $stmt->execute();
