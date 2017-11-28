@@ -48,16 +48,16 @@ class DbOperation {
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
                                       INNER JOIN account AS a ON wd.account_id=a.id
-                                      WHERE wd.visible=1 and wd.name LIKE ?
-                                      ORDER BY wd.name';
+                                      WHERE wd.visible=1 and wd.name LIKE ?';
 
         $like = "%".$search."%";
         if($type > 0) {
-            $query = $query . ' and wd.workout_type_id=?';
+            $query = $query . ' and wd.workout_type_id=? ORDER BY wd.name';
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("si", $like, $type);
         }
         else {
+            $query = $query . 'ORDER BY wd.name';
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("s", $like);
         }
