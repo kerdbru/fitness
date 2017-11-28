@@ -48,7 +48,8 @@ class DbOperation {
                                       FROM workout_description AS wd 
                                       INNER JOIN workout_type AS wt ON wd.workout_type_id=wt.id 
                                       INNER JOIN account AS a ON wd.account_id=a.id
-                                      WHERE wd.visible=1 and wd.name LIKE ?';
+                                      WHERE wd.visible=1 and wd.name LIKE ?
+                                      ORDER BY wd.name';
 
         $like = "%".$search."%";
         if($type > 0) {
