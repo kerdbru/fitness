@@ -42,7 +42,7 @@ class DbOperation {
         return $stmt->execute();
     }
 
-    function get_workout_descriptions($search, $type) {
+    function get_workout_descriptions($search, $type, $id) {
         $rows = array();
         $arguments = array();
         $types = 's';
@@ -57,6 +57,11 @@ class DbOperation {
             $types = $types . 'i';
             $arguments[] = $type;
             $query = $query . ' and wd.workout_type_id=?';
+        }
+        if($id > 0) {
+            $types = $types . 'i';
+            $arguments[] = $id;
+            $query = $query . ' and wd.account_id=?';
         }
         $query = $query . ' ORDER BY wd.name';
 
