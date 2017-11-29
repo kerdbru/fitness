@@ -42,7 +42,7 @@ class DbOperation {
         return $stmt->execute();
     }
 
-    function get_workout_descriptions($search, $type, $id) {
+    function get_workout_descriptions($search, $type, $id, $favorite) {
         $rows = array();
         $arguments = array();
         $types = 's';
@@ -71,6 +71,10 @@ class DbOperation {
 
         $result = $stmt->get_result();
         while($row = mysqli_fetch_assoc($result)) {
+            $stmt = $this->conn->prepare('SELECT count(*) AS number FROM favorites WHERE account_id=? AND workout_description_id = ?');
+            $stmt->bind_param('ii', $favorite, $row["id"]);
+            $stmt->execute();
+            $row['favorite'] = (int)mysqli_fetch_assoc($stmt->get_result())['number'];
 
             $stmt = $this->conn->prepare('SELECT count(*) as number from ratings where workout_description_id = ?');
             $stmt->bind_param('i', $row['id']);
