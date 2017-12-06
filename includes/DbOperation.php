@@ -269,5 +269,18 @@ class DbOperation {
         }
         return json_encode($rows);
     }
+
+    function get_users() {
+        $rows = array();
+        $stmt = $this->conn->prepare('SELECT id, first_name, last_name FROM account');
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+        return json_encode($rows);
+    }
 }
 ?>
