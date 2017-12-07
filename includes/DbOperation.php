@@ -284,9 +284,9 @@ class DbOperation {
     }
 
     function get_stats($id) {
-        $stmt = $this->conn->prepare("SELECT count(*) as number, CONVERT(ifnull(sum(r.score), 0), INT) as total from ratings as r 
-                                      INNER join workout_description as wd on r.workout_description_id = wd.id 
-                                      where wd.account_id = ?");
+        $stmt = $this->conn->prepare("SELECT count(*) as number, CONVERT(ifnull(sum(r.score),0), UNSIGNED INTEGER) as total 
+                                      from ratings as r INNER join workout_description as wd on 
+                                      r.workout_description_id = wd.id where wd.account_id = ?");
         $stmt->bind_param("i", $id);
 
         $stmt->execute();
