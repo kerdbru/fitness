@@ -297,6 +297,13 @@ class DbOperation {
         $stmt->execute();
         $response["creations"] = mysqli_fetch_assoc($stmt->get_result())["creations"];
 
+        $stmt = $this->conn->prepare("SELECT count(*) as favorites from favorites as f inner join 
+                                      workout_description as wd on f.workout_description_id=wd.id 
+                                      where wd.account_id = ? and not f.account_id = ?");
+        $stmt->bind_param("ii", $id, $id);
+        $stmt->execute();
+        $response["favorites"] = mysqli_fetch_assoc($stmt->get_result())["favorites"];
+
         return json_encode($response);
     }
 }
