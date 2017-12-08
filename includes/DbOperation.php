@@ -284,14 +284,20 @@ class DbOperation {
     }
 
     function get_stats($id) {
+        $response = Array();
         $stmt = $this->conn->prepare("SELECT count(*) as number, CONVERT(ifnull(sum(r.score),0), UNSIGNED INTEGER) as total 
                                       from ratings as r INNER join workout_description as wd on 
                                       r.workout_description_id = wd.id where wd.account_id = ?");
         $stmt->bind_param("i", $id);
-
         $stmt->execute();
+        $response = mysqli_fetch_assoc($stmt->get_result());
 
-        return json_encode(mysqli_fetch_assoc($stmt->get_result()));
+        $stmt = $this->conn->prepare("SELECT count(*) as creations from workout_description where account_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $response["creations"] = mysqli_fetch_assoc($stmt->get_result())["creations"];
+
+        return json_encode($response);
     }
 }
 ?>
